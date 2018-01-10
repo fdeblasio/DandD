@@ -29,23 +29,33 @@ def randChar():
     races = ["Dwarf", "Elf", "Halfling", "Human", "Dragonborn", "Gnome", "Half-Elf", "Half-Orc", "Tiefling"]
     classes = ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"]
     backgrounds = ["Acolyte", "Charlatan", "Criminal", "Entertainer", "Folk Hero", "Guild Artisan", "Hermit", "Noble", "Outlander", "Sage", "Sailor", "Soldier", "Urchin"]
+    align1 = ["Lawful", "Neutral", "Chaotic"]
+    align2 = ["Good", "Neutral", "Evil"]
+    allLang = ["Common", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc", "Abyssal", "Celestial", "Draconic", "Deep Speech", "Infernal", "Primordial", "Sylvan", "Undercommon"]
 
     #gets a random value from each array
-    race = races[randint(0, len(races) - 1)]
-    classe = classes[randint(0, len(classes) - 1)]
-    background = backgrounds[randint(0, len(backgrounds) - 1)]
-    char = [background, race, classe]
+    def randList(list):
+        return list[randint(0, len(list) - 1)]
+
+    race = randList(races)
+    classe = randList(classes)
+    background = randList(backgrounds)
+    char = [race, classe, background]
+    alignment = randList(align1) + " " + randList(align2)
+    if alignment == "Neutral Neutral":
+        alignment = "True Neutral"
 
     #Rolls for each stat in order (although in real life, after the six numbers are rolled, the player can assign them to whatever stats they want)
     stats = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
     statNums = []
-    abilMod = []
+    def abilMod(stat):
+        return abilityScore(statNums[stat])
+
     for i in range(6):
         rolls = []
         for j in range(4):
             rolls.append(dieRoll(1, 6))
         statNums.append(max(rolls[0], rolls[1]) + max(rolls[2], rolls[3]) + max(min(rolls[0], rolls[1]), min(rolls[2], rolls[3])))
-        abilMod.append(abilityScore(statNums[i]))
 
     #Adds racial bonuses and sets speed
     speed = 0
@@ -81,34 +91,28 @@ def randChar():
         statNums[INT] += 1
         speed = 30
 
-    #calculates other stats
-    movement = speed/5
-    #not the actual AC equation since there are multiple variables, but the actual AC values should be at least the AC values this outputs
-    AC = 10 + abilMod[DEX]
-    init = abilMod[DEX]
-    level = randint(1, 20)
-    profic = (level-1)/4 + 2
-    passivePerception = 10 + abilMod[WIS]
+    #hit die for HP
+    if classe == "Sorcerer" or classe == "Wizard":
+        hitdie = 6
+    elif classe == "Bard" or classe == "Cleric" or classe == "Druid" or classe == "Monk" or classe == "Rogue" or classe == "Warlock":
+        hitdie = 8
+    elif classe == "Fighter" or classe == "Paladin" or classe == "Ranger":
+        hitdie = 10
+    elif classe == "Barbarian":
+        hitdie = 12
 
-    #prints out the character
-    s = ""
-    for attribute in char:
-        s += attribute + " "
-    print s[:-1]
-    print "Level:", level
-    print "Proficiency Bonus: +" + str(profic)
-    print
-    for i in range (6):
-        print str(stats[i]) + ": \t", statNums[i], "(" + str(abilMod[i]) + ")"
-    print
-    print "Armor Class: \t", AC
-    print "Initiative: \t", init
-    print "Speed: \t\t", speed, "(" + str(movement) + ")"
-    print "Passive Perception:", passivePerception
-    print
+    #calculates other stats
+    #not the actual AC equation since there are multiple variables, but the actual AC values should be at least the AC values this outputs
+    level = randint(1, 20)
+    #proficieny bonus = (1-4: +2, 5-8: +3, 9-12: +4, 13-16: +5, 17-20: +6)
+    profic = (level-1)/4 + 2
+    spellMod = "N/A"
+    gold = 0
+    features = []
+    languages = ["Common"]
+    inventory = []
 
     #sets saving throws and skill bonuses
-    saveThrows = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]
     skillNames = ["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"]
     savingThrows = {}
     skills = {}
@@ -116,10 +120,9 @@ def randChar():
         def __init__(self, stat, prof):
             self.stat = stat
             self.prof = prof
-            self.num = 0
 
-    for stat in range(len(saveThrows)):
-        savingThrows[saveThrows[stat]] = skill(stat, False)
+    for stat in range(len(stats)):
+        savingThrows[stats[stat]] = skill(stat, False)
     #checks for the class in order to set its corresponding saving throws as proficient
     if classe == "Barbarian" or classe == "Fighter":
         savingThrows["Strength"].prof = True
@@ -142,14 +145,6 @@ def randChar():
     elif classe == "Sorcerer":
         savingThrows["Constitution"].prof = True
         savingThrows["Charisma"].prof = True
-    print "Saving Throws:"
-    for throw in saveThrows:
-        save = savingThrows[throw]
-        save.num = abilMod[save.stat]
-        if save.prof == True:
-            save.num += profic
-        print throw + ": \t", save.num
-    print
 
     for skil in skillNames:
         if skil == "Athletics":
@@ -203,13 +198,150 @@ def randChar():
     elif background == "Urchin":
         skills["Sleight of Hand"].prof = True
         skills["Stealth"].prof = True
+
+    #Race features
+    if race == "Dwarf":
+        features.append("Darkvision")
+        languages.append("Dwarvish")
+    elif race == "Elf":
+        features.append("Darkvision")
+        languages.append("Elvish")
+        skills["Perception"].prof = True
+    elif race == "Halfling":
+        languages.append("Halfling")
+    elif race == "Human":
+        noCommon = allLang
+        noCommon.remove("Common")
+        languages.append(randList(noCommon))
+    elif race == "Dragonborn":
+        languages.append("Draconic")
+    elif race == "Gnome":
+        features.append("Darkvision")
+        languages.append("Gnomish")
+    elif race == "Half-Elf":
+        features.append("Darkvision")
+        languages.append("Elvish")
+        noComElf = allLang
+        noComElf.remove("Common")
+        noComElf.remove("Elvish")
+        languages.append(randList(noComElf))
+    elif race == "Half-Orc":
+        features.append("Darkvision")
+        languages.append("Orc")
+        skills["Intimidation"].prof = True
+    elif race == "Tiefling":
+        features.append("Darkvision")
+        languages.append("Infernal")
+
+    #Class Features
+    #Implement Path/School/etc features
+    if classe == "Barbarian":
+        if level >= 5:
+            speed += 10
+            if level >= 20:
+                statNums[STR] += 4
+                statNums[CON] += 4
+        AC = 10 + abilMod(DEX) + abilMod(CON)
+    elif classe == "Bard":
+        stats = stats
+        #proficieny bonus is added down when skills are being calculated
+    elif classe == "Cleric":
+        spellMod = profic + abilMod(WIS)
+    elif classe == "Druid":
+        spellMod = profic + abilMod(WIS)
+        languages.append("Druidic")
+    elif classe == "Fighter":
+        stats = stats
+    elif classe == "Monk":
+        AC = 10 + abilMod(DEX) + abilMod(WIS)
+        if level >= 2:
+            #speed += (2-5: +10, 6-9: +15, 10-13: +20, 14-17: +25, 18-20: +30)
+            speed += (level-2)/4 * 5 + 10
+            if level >= 13:
+                for lang in allLang:
+                    if lang not in languages:
+                        languages.append(lang)
+    elif classe == "Paladin":
+        if level >= 2:
+            spellMod = profic + abilMod(CHA)
+    elif classe == "Ranger":
+        if level >= 2:
+            spellMod = profic + abilMod(WIS)
+    elif classe == "Rogue":
+        languages.append("Thieves' Cant")
+        if level >= 15:
+            savingThrows["Wisdom"].prof = True
+    elif classe == "Sorcerer":
+        spellMod = profic + abilMod(CHA)
+    elif classe == "Warlock":
+        spellMod = profic + abilMod(CHA)
+    elif classe == "Wizard":
+        spellMod = profic + abilMod(INT)
+
+    #These stats are based off of ability modifiers so they're put at the end since all modifiers should be final by now
+    HP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
+    AC = 10 + abilMod(DEX)
+    init = abilMod(DEX)
+    passivePerception = 10 + abilMod(WIS)
+
+    #prints out the character
+    s = ""
+    for attribute in char:
+        s += attribute + " "
+    print s[:-1]
+    print "Level:", level
+    print "Alignment:", alignment
+    print "Proficiency Bonus: +" + str(profic)
+    print
+    for i in range (6):
+        print str(stats[i]) + ": \t", statNums[i], "(" + str(abilMod(i)) + ")"
+    print
+    print "HP: \t\t", HP
+    print "Armor Class: \t", AC
+    print "Initiative: \t", init
+    movement = speed/5
+    print "Speed: \t\t", speed, "(" + str(movement) + ")"
+    print "Hit Die: \t", hitdie
+    print "Passive Perception:", passivePerception
+    print
+    print "Saving Throws:"
+    for throw in stats:
+        save = savingThrows[throw]
+        num = abilMod(save.stat)
+        if save.prof == True:
+            num += profic
+        elif classe == "Bard" and level >= 2:
+            num += profic/2
+        print throw + ": \t", num
+    print
     print "Skills:"
     for skil in skillNames:
         roll = skills[skil]
-        roll.num = abilMod[roll.stat]
+        num = abilMod(roll.stat)
         if roll.prof == True:
-            roll.num += profic
-        print skil + ": \t", roll.num
+            num += profic
+        elif classe == "Bard" and level >= 2:
+            num += profic/2
+        print skil, "\t(" + stats[roll.stat][:3].upper() + ")" + ": \t", num
+    print
+    print "Features:"
+    for feat in features:
+        print feat
+    print
+    print "Languages:"
+    for lang in languages:
+        print lang
+    print
+    if spellMod != "N/A":
+        print "Spell save DC:", 8 + spellMod
+        print "Spell attack modifier:", spellMod
+        print
+    print "Gold:", gold
+    print
+    print "Inventory:"
+    for inv in inventory:
+        print inv
+    print
 
 if __name__== "__main__":
     randChar()
