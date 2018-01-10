@@ -102,10 +102,14 @@ def randChar():
         hitdie = 12
 
     #calculates other stats
-    #not the actual AC equation since there are multiple variables, but the actual AC values should be at least the AC values this outputs
     level = randint(1, 20)
-    #proficieny bonus = (1-4: +2, 5-8: +3, 9-12: +4, 13-16: +5, 17-20: +6)
+    #proficiency bonus = (1-4: +2, 5-8: +3, 9-12: +4, 13-16: +5, 17-20: +6)
     profic = (level-1)/4 + 2
+    HP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
+    #not the actual AC equation since there are multiple variables, but the actual AC values should be at least the AC values this outputs
+    AC = 10 + abilMod(DEX)
+    init = abilMod(DEX)
+    passivePerception = 10 + abilMod(WIS)
     spellMod = "N/A"
     gold = 0
     features = []
@@ -244,7 +248,7 @@ def randChar():
         AC = 10 + abilMod(DEX) + abilMod(CON)
     elif classe == "Bard":
         stats = stats
-        #proficieny bonus is added down when skills are being calculated
+        #proficiency bonus is added down when skills are being calculated
     elif classe == "Cleric":
         spellMod = profic + abilMod(WIS)
     elif classe == "Druid":
@@ -277,12 +281,6 @@ def randChar():
         spellMod = profic + abilMod(CHA)
     elif classe == "Wizard":
         spellMod = profic + abilMod(INT)
-
-    #These stats are based off of ability modifiers so they're put at the end since all modifiers should be final by now
-    HP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
-    AC = 10 + abilMod(DEX)
-    init = abilMod(DEX)
-    passivePerception = 10 + abilMod(WIS)
 
     #prints out the character
     s = ""
