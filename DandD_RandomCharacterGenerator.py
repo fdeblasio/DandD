@@ -33,7 +33,7 @@ def randChar():
     align2 = ["Good", "Neutral", "Evil"]
     allLang = ["Common", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc", "Abyssal", "Celestial", "Draconic", "Deep Speech", "Infernal", "Primordial", "Sylvan", "Undercommon"]
 
-    #gets a random value from each list
+    #gets a random value from a list
     def randList(list):
         return list[randint(0, len(list) - 1)]
 
@@ -302,6 +302,16 @@ def randChar():
         inventory.extend(["small knife", "map of home city", "pet mouse", "token to remember parents by", "set of common clothes"])
         #city secrets
 
+    def abilImprove():
+        for i in range(2):
+            impr = []
+            for j in range(len(stats)):
+                if stats[j] < 20:
+                    impr.append(j)
+            if len(impr) > 0:
+                stat = randList(impr)
+                stats[stat] += 1
+
     #Class Features
     #Implement subclass features and skill proficiencies and spells
     subclass = ""
@@ -320,27 +330,127 @@ def randChar():
                 subclass = randList(subclasses)
                 if subclass == "Berserker":
                     ""
+                    #frenzy
                 elif subclass == "Totem":
                     ""
-                if level >= 5:
-                    speed += 10
-                    if level >= 20:
-                        stats[STR] += 4
-                        stats[CON] += 4
+                    #spirit seeker
+                    #totem spirit
+                if level >= 4:
+                    abilImprove()
+                    if level >= 5:
+                        feat.append("Extra Attack")
+                        speed += 10
+                        if level >= 6:
+                            if subclass == "Berserker":
+                                ""
+                                #mindless rage
+                            elif subclass == "Totem":
+                                ""
+                                #aspect of the beast
+                            if level >= 7:
+                                #feral instinct
+                                if level >= 8:
+                                    abilImprove()
+                                    if level >= 9:
+                                        #brutal critical
+                                        if level >= 10:
+                                            if subclass == "Berserker":
+                                                ""
+                                                #intimidating prescense
+                                            elif subclass == "Totem":
+                                                ""
+                                                #spirit walker
+                                            if level >= 11:
+                                                #relentless rage
+                                                if level >= 12:
+                                                    abilImprove()
+                                                    if level >= 13:
+                                                        #brutal critical
+                                                        if level >= 14:
+                                                            if subclass == "Berserker":
+                                                                ""
+                                                                #retaliation
+                                                            elif subclass == "Totem":
+                                                                ""
+                                                                #totemic attunement
+                                                            if level >= 15:
+                                                                #persistent rage
+                                                                if level >= 16:
+                                                                    abilImprove()
+                                                                    if level >= 17:
+                                                                        #brutal critical
+                                                                        if level >= 18:
+                                                                            #indomitable might
+                                                                            if level >= 19:
+                                                                                abilImprove()
+                                                                                if level >= 20:
+                                                                                    stats[STR] += 4
+                                                                                    stats[CON] += 4
     elif classe == "Bard":
         for i in range(3):
             newSkill(skillNames)
         hitdie = 8
         savingThrows["Dexterity"].prof = True
         savingThrows["Charisma"].prof = True
-        #proficiency bonus is added down when skills are being calculated
+        spellMod = profic + abilMod(CHA)
+        #bardic inspiration
+        #Jack of All Trades is added down when skills are being calculated
+        #song of rest 1d6 (figure out equation)
         if level >= 3:
             subclasses = ["Lore", "Valor"]
             subclass = randList(subclasses)
             if subclass == "Lore":
                 ""
+                for i in range(3):
+                    newSkill(skillNames)
+                #cutting words
             elif subclass == "Valor":
                 ""
+                #combat inspiration
+            #expertise
+            if level >= 4:
+                abilImprove()
+                if level >= 5:
+                    #font of inspiration
+                    if level >= 6:
+                        #countercharm
+                        if subclass == "Lore":
+                            ""
+                            #magical secrets
+                        elif subclass == "Valor":
+                            ""
+                            #extra attack
+                    if level >= 8:
+                        abilImprove()
+                        if level >= 9:
+                            #song of rest 1d8
+                            if level >= 10:
+                                #expertise
+                                #magical secrets
+                                if level >= 12:
+                                    abilImprove()
+                                    if level >= 13:
+                                        #song of rest 1d10
+                                        if level >= 14:
+                                            if subclass == "Lore":
+                                                ""
+                                                #peerless skill
+                                            elif subclass == "Valor":
+                                                ""
+                                                #battle magic
+                                            #magical secrets
+                                            if level >= 15:
+                                                #
+                                                if level >= 16:
+                                                    abilImprove()
+                                                    if level >= 17:
+                                                        #song of rest 1d12
+                                                        if level >= 18:
+                                                            #magical secrets
+                                                            if level >= 19:
+                                                                abilImprove()
+                                                                if level >= 20:
+                                                                    #superior inspiration
     elif classe == "Cleric":
         for i in range(2):
             newSkill(["History", "Insight", "Medicine", "Persuasion", "Religion"])
@@ -362,15 +472,96 @@ def randChar():
         hitdie = 10
         savingThrows["Strength"].prof = True
         savingThrows["Constitution"].prof = True
-        if level >= 3:
-            subclasses = ["Champion", "Battle Master", "Eldritch Knight"]
-            subclass = randList(subclasses)
-            if subclass == "Champion":
-                ""
-            elif subclass == "Battle Master":
-                ""
-            elif subclass == "Eldritch Knight":
-                ""
+        #improve Fighting Style
+        fightStyles = ["Archery", "Defense", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"]
+        fistyle = {}
+        fistyle["Archery"] = "You gain a +2 bonus to attack rolls you make with ranged weapons."
+        fistyle["Defense"] = "While you are wearing armor, you gain a +1 bonus to AC."
+        fistyle["Dueling"] = "When you are wielding a melee w eapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
+        fistyle["Great Weapon Fighting"] = "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit."
+        fistyle["Protection"] = "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield."
+        fistyle["Two-Weapon Fighting"] = "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack."
+        fightStyle = randList(fightStyles)
+        fstl = "Fighting Style: " + fightStyle + ": " + fistyle[fightStyle]
+        features.append(fstl)
+        fightStyles.remove(fightStyle)
+        secwind = "Second Wind: On your turn, you can use a bonus action to regain hit points equal to 1d10 + " + str(level) + ". Once you use this feature, you must finish a rest before you can use it again."
+        features.append(secwind)
+        if level >= 2:
+            features.append("Action Surge: On your turn, you can take one additional action on top of your regular action and a possible bonus action. Once you use this feature, you must finish a rest before you can use it again.")
+            if level >= 3:
+                subclasses = ["Champion", "Battle Master", "Eldritch Knight"]
+                subclass = randList(subclasses)
+                if subclass == "Champion":
+                    features.append("Improved Critical: Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20.")
+                elif subclass == "Battle Master":
+                    ""
+                elif subclass == "Eldritch Knight":
+                    spellMod = profic + abilMod(WIS)
+                    ""
+                if level >= 4:
+                    abilImprove()
+                    if level >= 5:
+                        features.append("Extra Attack")
+                        if level >= 6:
+                            abilImprove()
+                            if level >= 7:
+                                if subclass == "Champion":
+                                    #proficiency bonus added down with throws
+                                    features.append("Remarkable Athlete: When you make a running long jump, the distance you can cover increases by " + str(abilMod(STR)) + " (STR mod) feet")
+                                elif subclass == "Battle Master":
+                                    ""
+                                elif subclass == "Eldritch Knight":
+                                    ""
+                                if level >= 8:
+                                    abilImprove()
+                                    if level >= 9:
+                                        features.append("Indomitable: You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.")
+                                        if level >= 10:
+                                            if subclass == "Champion":
+                                                fightStyle = randList(fightStyles)
+                                                fstl = "Fighting Style: " + fightStyle + ": " + fistyle[fightStyle]
+                                                features.append(fstl)
+                                                fightStyles.remove(fightStyle)
+                                            elif subclass == "Battle Master":
+                                                ""
+                                            elif subclass == "Eldritch Knight":
+                                                ""
+                                            if level >= 11:
+                                                features.remove("Extra Attack")
+                                                features.append("Extra Attack x 2")
+                                                if level >= 12:
+                                                    abilImprove()
+                                                    if level >= 13:
+                                                        features.append("Indomitable x 2")
+                                                        if level >= 14:
+                                                            abilImprove()
+                                                            if level >= 15:
+                                                                if subclass == "Champion":
+                                                                    features.append("Superior Critical: Your weapon attacks score a critical hit on a roll of 18-20.")
+                                                                elif subclass == "Battle Master":
+                                                                    ""
+                                                                elif subclass == "Eldritch Knight":
+                                                                    ""
+                                                                if level >= 16:
+                                                                    abilImprove()
+                                                                    if level >= 17:
+                                                                        features.append("You can use Action Surge twice before a rest, but only once on the same turn.")
+                                                                        features.append("Indomitable x 3")
+                                                                        if level >= 18:
+                                                                            if subclass == "Champion":
+                                                                                features.append("Survivor: At the start of each of your turns, you regain hit points equal to 5 + " + str(abilMod(CON)) + " (CON mod) if you have less than or equal to half of your hit points left. You don't gain this benefit if you have 0 hit points.")
+                                                                                #if curHP <= maxHP/2 and cur > 0:
+                                                                                    #curHP += 5 + abilMod(CON)
+                                                                            elif subclass == "Battle Master":
+                                                                                ""
+                                                                            elif subclass == "Eldritch Knight":
+                                                                                ""
+                                                                            if level >= 19:
+                                                                                abilImprove()
+                                                                                if level >= 20:
+                                                                                    features.remove("Extra Attack x 2")
+                                                                                    features.append("Extra Attack x 3")
     elif classe == "Monk":
         for i in range(2):
             newSkill(["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"])
@@ -449,13 +640,60 @@ def randChar():
         hitdie = 6
         savingThrows["Constitution"].prof = True
         savingThrows["Charisma"].prof = True
+        #spells
         spellMod = profic + abilMod(CHA)
         subclasses = ["Draconic Bloodline", "Wild Magic"]
         subclass = randList(subclasses)
         if subclass == "Draconic Bloodline":
             ""
+            #draconic ancestor
+            if "Draconic" not in languages:
+                languages.append("Draconic")
         elif subclass == "Wild Magic":
             ""
+            #wild magic surge
+            #tides of chaos
+        if level >= 2:
+            #font of magic
+            if level >= 3:
+                #metamagic
+                if level >= 4:
+                    abilImprove()
+                    if level >= 6:
+                        if subclass == "Draconic Bloodline":
+                            ""
+                            #elemental affinity
+                        elif subclass == "Wild Magic":
+                            ""
+                            #bend luck
+                        if level >= 8:
+                            abilImprove()
+                            if level >= 10:
+                                #metamagic
+                                if level >= 12:
+                                    abilImprove()
+                                    if level >= 14:
+                                        if subclass == "Draconic Bloodline":
+                                            ""
+                                            #dragon wings
+                                        elif subclass == "Wild Magic":
+                                            ""
+                                            #controlled chaos
+                                        if level >= 16:
+                                            abilImprove()
+                                            if level >= 17:
+                                                #metamagic
+                                                if level >= 18:
+                                                    if subclass == "Draconic Bloodline":
+                                                        ""
+                                                        #draconic prescense
+                                                    elif subclass == "Wild Magic":
+                                                        ""
+                                                        #spell bombardment
+                                                    if level >= 19:
+                                                        abilImprove()
+                                                        if level >= 20:
+                                                            #sorcerous restoration
     elif classe == "Warlock":
         for i in range(2):
             newSkill(["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"])
@@ -471,18 +709,21 @@ def randChar():
         savingThrows["Wisdom"].prof = True
         spellMod = profic + abilMod(INT)
 
-    HP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
-    if race == "Dwarf" and subrace == "Hill":
-        HP += level
+    maxHP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
+    if (race == "Dwarf" and subrace == "Hill") or (classe == "Sorcerer" and subclass == "Draconic Bloodline"):
+        maxHP += level
+    curHP = maxHP
 
     #calculates other stats based on ability modifiers
     if classe == "Barbarian":
         AC = 10 + abilMod(DEX) + abilMod(CON)
     elif classe == "Monk":
         AC = 10 + abilMod(DEX) + abilMod(WIS)
+    elif classe == "Sorcerer" and subclass == "Draconic Bloodline":
+        AC = 13 + abilMod(DEX)
     else:
         #not the actual AC equation since there are multiple variables such as armor, but the actual AC values should be at least the AC values this outputs
-        AC = 10 + abilMod(DEX)
+        AC = 11 + abilMod(DEX)
     init = abilMod(DEX)
     passivePerception = 10 + abilMod(WIS)
 
@@ -505,7 +746,7 @@ def randChar():
     for i in range (6):
         print str(statistics[i]) + ": \t", stats[i], "(" + str(abilMod(i)) + ")"
     print
-    print "HP: \t\t", HP
+    print "HP: \t\t", str(curHP) + "/" + str(maxHP)
     print "Armor Class: \t", AC
     print "Initiative: \t", init
     movement = speed/5
@@ -523,6 +764,9 @@ def randChar():
         else:
             if classe == "Bard" and level >= 2:
                 num += profic/2
+            elif classe == "Fighter" and subclass == "Champion" and level >= 7:
+                if throw in ["Strength", "Dexterity", "Constitution"]:
+                    num += (profic + 1)/2
             print throw + ": \t", num
     print
     print "Skills:"
