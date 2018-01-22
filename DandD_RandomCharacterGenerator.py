@@ -338,7 +338,7 @@ def randChar():
                 if level >= 4:
                     abilImprove()
                     if level >= 5:
-                        feat.append("Extra Attack")
+                        features.append("Extra Attack")
                         speed += 10
                         if level >= 6:
                             if subclass == "Berserker":
@@ -450,6 +450,7 @@ def randChar():
                                                             if level >= 19:
                                                                 abilImprove()
                                                                 if level >= 20:
+                                                                    ""
                                                                     #superior inspiration
     elif classe == "Cleric":
         for i in range(2):
@@ -458,6 +459,21 @@ def randChar():
         savingThrows["Wisdom"].prof = True
         savingThrows["Charisma"].prof = True
         spellMod = profic + abilMod(WIS)
+        if level >= 2:
+            if level >= 4:
+                if level >= 5:
+                    if level >= 6:
+                        if level >= 8:
+                            if level >= 10:
+                                if level >= 11:
+                                    if level >= 12:
+                                        if level >= 14:
+                                            if level >= 16:
+                                                if level >= 17:
+                                                    if level >= 18:
+                                                        if level >= 19:
+                                                            if level >= 20:
+                                                                ""
     elif classe == "Druid":
         for i in range(2):
             newSkill(["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"])
@@ -466,6 +482,18 @@ def randChar():
         savingThrows["Wisdom"].prof = True
         spellMod = profic + abilMod(WIS)
         languages.append("Druidic")
+        if level >= 2:
+            if level >= 4:
+                if level >= 6:
+                    if level >= 8:
+                        if level >= 10:
+                            if level >= 12:
+                                if level >= 14:
+                                    if level >= 16:
+                                        if level >= 18:
+                                            if level >= 19:
+                                                if level >= 20:
+                                                    ""
     elif classe == "Fighter":
         for i in range(2):
             newSkill(["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"])
@@ -496,9 +524,11 @@ def randChar():
                     features.append("Improved Critical: Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20.")
                 elif subclass == "Battle Master":
                     ""
+                    #combat superiority
                 elif subclass == "Eldritch Knight":
                     spellMod = profic + abilMod(WIS)
                     ""
+                    #weapon bond
                 if level >= 4:
                     abilImprove()
                     if level >= 5:
@@ -511,8 +541,10 @@ def randChar():
                                     features.append("Remarkable Athlete: When you make a running long jump, the distance you can cover increases by " + str(abilMod(STR)) + " (STR mod) feet")
                                 elif subclass == "Battle Master":
                                     ""
+                                    #know your enemy
                                 elif subclass == "Eldritch Knight":
                                     ""
+                                    #war magic
                                 if level >= 8:
                                     abilImprove()
                                     if level >= 9:
@@ -525,8 +557,10 @@ def randChar():
                                                 fightStyles.remove(fightStyle)
                                             elif subclass == "Battle Master":
                                                 ""
+                                                #improved combat superiority
                                             elif subclass == "Eldritch Knight":
                                                 ""
+                                                #eldritch strike
                                             if level >= 11:
                                                 features.remove("Extra Attack")
                                                 features.append("Extra Attack x 2")
@@ -541,8 +575,10 @@ def randChar():
                                                                     features.append("Superior Critical: Your weapon attacks score a critical hit on a roll of 18-20.")
                                                                 elif subclass == "Battle Master":
                                                                     ""
+                                                                    #relerelentless
                                                                 elif subclass == "Eldritch Knight":
                                                                     ""
+                                                                    #arcane charge
                                                                 if level >= 16:
                                                                     abilImprove()
                                                                     if level >= 17:
@@ -555,8 +591,10 @@ def randChar():
                                                                                     #curHP += 5 + abilMod(CON)
                                                                             elif subclass == "Battle Master":
                                                                                 ""
+                                                                                #improved combat superiority
                                                                             elif subclass == "Eldritch Knight":
                                                                                 ""
+                                                                                #improved war magic
                                                                             if level >= 19:
                                                                                 abilImprove()
                                                                                 if level >= 20:
@@ -568,22 +606,91 @@ def randChar():
         hitdie = 8
         savingThrows["Strength"].prof = True
         savingThrows["Dexterity"].prof = True
+        #martial arts
         if level >= 2:
+            #ki
             #speed += (2-5: +10, 6-9: +15, 10-13: +20, 14-17: +25, 18-20: +30)
             speed += (level-2)/4 * 5 + 10
             if level >= 3:
+                #deflect missiles
                 subclasses = ["Open Hand", "Shadow", "Four Elements"]
                 subclass = randList(subclasses)
                 if subclass == "Open Hand":
                     ""
+                    #open hand technique
                 elif subclass == "Shadow":
                     ""
+                    #shadow arts
                 elif subclass == "Four Elements":
                     ""
-                if level >= 13:
-                    for lang in allLang:
-                        if lang not in languages:
-                            languages.append(lang)
+                    #disciple of the elements
+                if level >= 4:
+                    abilImprove()
+                    #slow fall
+                    if level >= 5:
+                        features.append("Extra Attack")
+                        #stunning strike
+                        if level >= 6:
+                            #ki-empowered strikes
+                            if subclass == "Open Hand":
+                                ""
+                                #wholeness of body
+                            elif subclass == "Shadow":
+                                ""
+                                #shadow step
+                            elif subclass == "Four Elements":
+                                ""
+                                #elements
+                            if level >= 7:
+                                #evasion
+                                #stillness of mind
+                                if level >= 8:
+                                    abilImprove()
+                                    if level >= 9:
+                                        #unarmored movement
+                                        if level >= 10:
+                                            features.append("Immune to disease and poison")
+                                            if level >= 11:
+                                                if subclass == "Open Hand":
+                                                    ""
+                                                    #tranquility
+                                                elif subclass == "Shadow":
+                                                    ""
+                                                    #cloak of shadows
+                                                elif subclass == "Four Elements":
+                                                    ""
+                                                    #elements
+                                                if level >= 12:
+                                                    abilImprove()
+                                                    if level >= 13:
+                                                        for lang in allLang:
+                                                            if lang not in languages:
+                                                                languages.append(lang)
+                                                        if level >= 14:
+                                                            for throw in statistics:
+                                                                savingThrows[throw].prof = True
+                                                            #diamond soul
+                                                            if level >= 15:
+                                                                #timeless body
+                                                                if level >= 16:
+                                                                    abilImprove()
+                                                                    if level >= 17:
+                                                                        if subclass == "Open Hand":
+                                                                            ""
+                                                                            #quivering palm
+                                                                        elif subclass == "Shadow":
+                                                                            ""
+                                                                            #opportunist
+                                                                        elif subclass == "Four Elements":
+                                                                            ""
+                                                                            #elements
+                                                                        if level >= 18:
+                                                                            #empty body
+                                                                            if level >= 19:
+                                                                                abilImprove()
+                                                                                if level >= 20:
+                                                                                    #perfect self
+                                                                                    ""
     elif classe == "Paladin":
         for i in range(2):
             newSkill(["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion"])
@@ -601,6 +708,21 @@ def randChar():
                     ""
                 elif subclass == "Vengeance":
                     ""
+                if level >= 4:
+                    if level >= 5:
+                        if level >= 6:
+                            if level >= 7:
+                                if level >= 8:
+                                    if level >= 10:
+                                        if level >= 11:
+                                            if level >= 12:
+                                                if level >= 14:
+                                                    if level >= 15:
+                                                        if level >= 16:
+                                                            if level >= 18:
+                                                                if level >= 19:
+                                                                    if level >= 20:
+                                                                        ""
     elif classe == "Ranger":
         for i in range(3):
             newSkill(["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"])
@@ -616,6 +738,21 @@ def randChar():
                     ""
                 elif subclass == "Beast Master":
                     ""
+                if level >= 4:
+                    if level >= 5:
+                        if level >= 6:
+                            if level >= 7:
+                                if level >= 8:
+                                    if level >= 10:
+                                        if level >= 11:
+                                            if level >= 12:
+                                                if level >= 14:
+                                                    if level >= 15:
+                                                        if level >= 16:
+                                                            if level >= 18:
+                                                                if level >= 19:
+                                                                    if level >= 20:
+                                                                        ""
     elif classe == "Rogue":
         for i in range(4):
             newSkill(["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth"])
@@ -623,17 +760,85 @@ def randChar():
         savingThrows["Dexterity"].prof = True
         savingThrows["Intelligence"].prof = True
         languages.append("Thieves' Cant")
-        if level >= 3:
-            subclasses = ["Thief", "Assassin", "Arcane Trickster"]
-            subclass = randList(subclasses)
-            if subclass == "Thief":
-                ""
-            elif subclass == "Assassin":
-                ""
-            elif subclass == "Arcane Trickster":
-                ""
-            if level >= 15:
-                savingThrows["Wisdom"].prof = True
+        #expertise
+        #sneak attack
+        #equation
+        if level >= 2:
+            #cunning action
+            if level >= 3:
+                subclasses = ["Thief", "Assassin", "Arcane Trickster"]
+                subclass = randList(subclasses)
+                if subclass == "Thief":
+                    ""
+                    #fast hands
+                    #second-story work
+                elif subclass == "Assassin":
+                    ""
+                    #assassinate
+                elif subclass == "Arcane Trickster":
+                    ""
+                    spellMod = profic + abilMod(INT)
+                    #spells
+                    #mage hand
+                if level >= 4:
+                    abilImprove()
+                    if level >= 5:
+                        #uncanny dodge
+                        if level >= 6:
+                            #expertise
+                            if level >= 7:
+                                #evasion
+                                if level >= 8:
+                                    abilImprove()
+                                    if level >= 9:
+                                        if subclass == "Thief":
+                                            ""
+                                            #supreme sneak
+                                        elif subclass == "Assassin":
+                                            ""
+                                            #infiltration expertise
+                                        elif subclass == "Arcane Trickster":
+                                            ""
+                                            #magical ambush
+                                        if level >= 10:
+                                            abilImprove()
+                                            if level >= 11:
+                                                #reliable talent
+                                                if level >= 12:
+                                                    abilImprove()
+                                                    if level >= 13:
+                                                        if subclass == "Thief":
+                                                            ""
+                                                            #use magic device
+                                                        elif subclass == "Assassin":
+                                                            ""
+                                                            #impostor
+                                                        elif subclass == "Arcane Trickster":
+                                                            ""
+                                                            #versatile trickster
+                                                        if level >= 14:
+                                                            #blind sense
+                                                            if level >= 15:
+                                                                savingThrows["Wisdom"].prof = True
+                                                                if level >= 16:
+                                                                    abilImprove()
+                                                                    if level >= 17:
+                                                                        if subclass == "Thief":
+                                                                            ""
+                                                                            #thief's reflexes
+                                                                        elif subclass == "Assassin":
+                                                                            ""
+                                                                            #death strike
+                                                                        elif subclass == "Arcane Trickster":
+                                                                            ""
+                                                                            #spell thief
+                                                                        if level >= 18:
+                                                                            #elusive
+                                                                            if level >= 19:
+                                                                                abilImprove()
+                                                                                if level >= 20:
+                                                                                    ""
+                                                                                    #stroke of luck
     elif classe == "Sorcerer":
         for i in range(2):
             newSkill(["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"])
@@ -694,6 +899,7 @@ def randChar():
                                                         abilImprove()
                                                         if level >= 20:
                                                             #sorcerous restoration
+                                                            ""
     elif classe == "Warlock":
         for i in range(2):
             newSkill(["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"])
@@ -701,6 +907,22 @@ def randChar():
         savingThrows["Wisdom"].prof = True
         savingThrows["Charisma"].prof = True
         spellMod = profic + abilMod(CHA)
+        if level >= 2:
+            if level >= 3:
+                if level >= 4:
+                    if level >= 6:
+                        if level >= 8:
+                            if level >= 10:
+                                if level >= 11:
+                                    if level >= 12:
+                                        if level >= 13:
+                                            if level >= 14:
+                                                if level >= 15:
+                                                    if level >= 16:
+                                                        if level >= 17:
+                                                            if level >= 19:
+                                                                if level >= 20:
+                                                                    ""
     elif classe == "Wizard":
         for i in range(2):
             newSkill(["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"])
@@ -708,6 +930,18 @@ def randChar():
         savingThrows["Intelligence"].prof = True
         savingThrows["Wisdom"].prof = True
         spellMod = profic + abilMod(INT)
+        if level >= 2:
+            if level >= 4:
+                if level >= 6:
+                    if level >= 8:
+                        if level >= 10:
+                            if level >= 12:
+                                if level >= 14:
+                                    if level >= 16:
+                                        if level >= 18:
+                                            if level >= 19:
+                                                if level >= 20:
+                                                    ""
 
     maxHP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
     if (race == "Dwarf" and subrace == "Hill") or (classe == "Sorcerer" and subclass == "Draconic Bloodline"):
