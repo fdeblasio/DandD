@@ -94,7 +94,7 @@ def randChar():
         languages.append(randList(newLangs))
 
     def newSkill(skillz):
-        list = skillz
+        list = skillz[:]
         for skil in skillz:
             if skills[skil].prof == True:
                 list.remove(skil)
@@ -400,7 +400,6 @@ def randChar():
             subclasses = ["Lore", "Valor"]
             subclass = randList(subclasses)
             if subclass == "Lore":
-                ""
                 for i in range(3):
                     newSkill(skillNames)
                 #cutting words
@@ -461,17 +460,22 @@ def randChar():
         spellMod = profic + abilMod(WIS)
         if level >= 2:
             if level >= 4:
+                abilImprove()
                 if level >= 5:
                     if level >= 6:
                         if level >= 8:
+                            abilImprove()
                             if level >= 10:
                                 if level >= 11:
                                     if level >= 12:
+                                        abilImprove()
                                         if level >= 14:
                                             if level >= 16:
+                                                abilImprove()
                                                 if level >= 17:
                                                     if level >= 18:
                                                         if level >= 19:
+                                                            abilImprove()
                                                             if level >= 20:
                                                                 ""
     elif classe == "Druid":
@@ -484,14 +488,19 @@ def randChar():
         languages.append("Druidic")
         if level >= 2:
             if level >= 4:
+                abilImprove()
                 if level >= 6:
                     if level >= 8:
+                        abilImprove()
                         if level >= 10:
                             if level >= 12:
+                                abilImprove()
                                 if level >= 14:
                                     if level >= 16:
+                                        abilImprove()
                                         if level >= 18:
                                             if level >= 19:
+                                                abilImprove()
                                                 if level >= 20:
                                                     ""
     elif classe == "Fighter":
@@ -709,18 +718,23 @@ def randChar():
                 elif subclass == "Vengeance":
                     ""
                 if level >= 4:
+                    abilImprove()
                     if level >= 5:
                         if level >= 6:
                             if level >= 7:
                                 if level >= 8:
+                                    abilImprove()
                                     if level >= 10:
                                         if level >= 11:
                                             if level >= 12:
+                                                abilImprove()
                                                 if level >= 14:
                                                     if level >= 15:
                                                         if level >= 16:
+                                                            abilImprove()
                                                             if level >= 18:
                                                                 if level >= 19:
+                                                                    abilImprove()
                                                                     if level >= 20:
                                                                         ""
     elif classe == "Ranger":
@@ -739,18 +753,23 @@ def randChar():
                 elif subclass == "Beast Master":
                     ""
                 if level >= 4:
+                    abilImprove()
                     if level >= 5:
                         if level >= 6:
                             if level >= 7:
                                 if level >= 8:
+                                    abilImprove()
                                     if level >= 10:
                                         if level >= 11:
                                             if level >= 12:
+                                                abilImprove()
                                                 if level >= 14:
                                                     if level >= 15:
                                                         if level >= 16:
+                                                            abilImprove()
                                                             if level >= 18:
                                                                 if level >= 19:
+                                                                    abilImprove()
                                                                     if level >= 20:
                                                                         ""
     elif classe == "Rogue":
@@ -910,17 +929,26 @@ def randChar():
         if level >= 2:
             if level >= 3:
                 if level >= 4:
+                    abilImprove()
                     if level >= 6:
                         if level >= 8:
+                            abilImprove()
                             if level >= 10:
                                 if level >= 11:
+                                    #Mystic Arcanum (6th-level)
                                     if level >= 12:
+                                        abilImprove()
                                         if level >= 13:
+                                            #Mystic Arcanum (7th-level)
                                             if level >= 14:
                                                 if level >= 15:
+                                                    #Mystic Arcanum (8th-level)
                                                     if level >= 16:
+                                                        abilImprove()
                                                         if level >= 17:
+                                                            #Mystic Arcanum (9th-level)
                                                             if level >= 19:
+                                                                abilImprove()
                                                                 if level >= 20:
                                                                     ""
     elif classe == "Wizard":
@@ -932,15 +960,22 @@ def randChar():
         spellMod = profic + abilMod(INT)
         if level >= 2:
             if level >= 4:
+                abilImprove()
                 if level >= 6:
                     if level >= 8:
+                        abilImprove()
                         if level >= 10:
                             if level >= 12:
+                                abilImprove()
                                 if level >= 14:
                                     if level >= 16:
+                                        abilImprove()
                                         if level >= 18:
+                                            #Spell Mastery
                                             if level >= 19:
+                                                abilImprove()
                                                 if level >= 20:
+                                                    #Signature Spells
                                                     ""
 
     maxHP = hitdie + abilMod(CON)*level + dieRoll(level - 1, hitdie)
